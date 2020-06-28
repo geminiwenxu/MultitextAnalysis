@@ -106,6 +106,9 @@ def vader_sentiment(text_df):
     return pos_count, neu_count, neg_count
 
 
+
+
+
 def save_to_disk(data, path, filename):
     with open(path + filename, 'w') as f:
         json.dump(data, f)
@@ -122,15 +125,3 @@ def plot_sentiment(total_pos, total_neg):
     plt.ylabel('number')
     plt.title('number of Positive and Negative Tweets')
     return plt.show()
-
-    # vectorizer_path = '/MultitextAnalysis/model_Naive_bayes/NB_vectorizer.pickle'
-    # classifier_path = '/MultitextAnalysis/model_Naive_bayes/NB_classifier.pickle'
-    #
-    # vectorizer = get_vectorizer(vectorizer_path)
-    # classifier = get_classifier(classifier_path)
-    #
-    # text_df = cleaned_df
-    # clf = classifier
-    # vectorizer = vectorizer
-    # total_pos, total_neg = sentiment_calculation(text_df, clf, vectorizer)
-    # sentiment_report = plot_sentiment(total_neg, total_pos)

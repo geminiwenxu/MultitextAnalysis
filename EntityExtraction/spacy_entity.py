@@ -19,7 +19,7 @@ if __name__ == "__main__":
     tweets_data_path = '../Data/tweets_by_country/'
     out = pd.DataFrame()
     out_count = {}
-    all_files = get_all_files(Config.base_path + tweets_data_path, extension='csv')
+    all_files = get_all_files(Config.filepath + tweets_data_path, extension='csv')
     for country in Config.country_prefix:
         df = pd.DataFrame()
         news_files = list(filter(lambda x: country in x, all_files))

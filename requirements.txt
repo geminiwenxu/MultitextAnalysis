@@ -3,4 +3,5 @@ numpy
 pandas
 nltk
 spacy
-vader
+vaderSentiment
+matplotlib
