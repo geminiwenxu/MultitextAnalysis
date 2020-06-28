@@ -27,11 +27,6 @@ def check_entity(text_df, entities=Config.entities):
     return per_country
 
 
-def result(total_pos, total_neu, total_neg):
-    each_country_result = dict(num_pos=total_pos, num_neu=total_neu, num_neg=total_neg)
-    return each_country_result
-
-
 if __name__ == "__main__":
     tweets_data_path = 'tweets_by_country/'
     out = {}
