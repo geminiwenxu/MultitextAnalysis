@@ -21,8 +21,8 @@ def load_live_tweets(tweets_data_path):
     return tweets
 
 
-def result(total_pos, total_neu, total_neg, time_stamp):
-    each_live_result = dict(timestamp=time_stamp, num_pos=total_pos, num_neu=total_neu, num_neg=total_neg)
+def result(total_pos, total_neu, total_neg):
+    each_live_result = dict( num_pos=total_pos, num_neu=total_neu, num_neg=total_neg)
     return each_live_result
 
 
@@ -36,8 +36,8 @@ if __name__ == '__main__':
 
         total_pos, total_neu, total_neg = vader_sentiment(cleaned_tweets)
         time_stamp = cleaned_tweets.iat[1, 0]  # get the time stamp of each live stream file
-        each_live_result = result(total_pos, total_neu, total_neg, time_stamp)
-        out[each_live_result['timestamp']] = each_live_result
+        each_live_result = result(total_pos, total_neu, total_neg)
+        out.update({time_stamp: each_live_result})
 
     save_to_disk(data=out,
                  path=Config.reports_path,

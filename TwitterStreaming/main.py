@@ -1,12 +1,13 @@
-from TwitterStreaming.twtr_stream import TwitterStreamer
+from TwitterStreaming.twtr_analyser import TweetAnalyzer
+from TwitterStreaming.twtr_client import TwitterClient
 
 if __name__ == '__main__':
     '''streaming live tweets_by_country with the keywords'''
-    hash_tag_list = ['covid-19', 'coronavirus', 'socialdistance', 'socialdistancing', 'globalpandemic', 'stayathome','FightCOVID19']
-    fetched_tweets_filename = "../Data/tweets_stream/live_stream_11.json"
-    tweets_streamer = TwitterStreamer()
-    tweets_streamer.stream_tweets(hash_tag_list=hash_tag_list,
-                                  fetched_tweets_filename=fetched_tweets_filename)
+    # hash_tag_list = ['covid-19', 'coronavirus', 'socialdistance', 'socialdistancing', 'globalpandemic', 'stayathome','FightCOVID19']
+    # fetched_tweets_filename = "../Data/tweets_stream/live_stream_12.json"
+    # tweets_streamer = TwitterStreamer()
+    # tweets_streamer.stream_tweets(hash_tag_list=hash_tag_list,
+    #                               fetched_tweets_filename=fetched_tweets_filename)
 
     '''tweets_by_country stream from a specific user with keyword'''
     # hash_tag_list = ['covid-19', 'coronavirus', 'socialdistance', 'socialdistancing',
@@ -20,11 +21,12 @@ if __name__ == '__main__':
     #                           follow=follow)
 
     '''using TwitterStreaming class feature to extract Data from specific users'''
-    # news = TwitterClient('2501296444')
-    # for tweet in news.get_user_timeline_tweets(3200):
-    #     print(tweet)
-    #     tweet_df = TweetAnalyzer.filter_convert_pd(tweet)
-    #     tweet_df.to_csv('tweets_by_country/denmark.csv', mode='a', header=False)
+    news = TwitterClient('32397387')
+    for tweet in news.get_user_timeline_tweets(6400):
+        print(tweet)
+        tweet_df = TweetAnalyzer.filter_convert_pd(tweet)
+        tweet_df.to_csv('/Users/geminiwenxu/PycharmProjects/MultitextAnalysis/Data/tweets_by_country_translation/nl_het.csv',
+                        mode='a', header=False)
 
     '''Alternative'''
     # twitter_client = TwitterClient()

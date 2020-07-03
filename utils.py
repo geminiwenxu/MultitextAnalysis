@@ -2,7 +2,7 @@ import json
 import pickle
 import re
 from glob import glob
-
+from googletrans import Translator
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -11,7 +11,7 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 def get_all_files(path, extension='json'):
     # retrieve all files from given path
-    stock_files = (glob(path + "*." + extension))
+    stock_files = glob(path + "*." + extension)
     return stock_files
 
 
@@ -90,23 +90,43 @@ def sentiment_calculation(text_df, clf, vectorizer):
 def vader_sentiment(text_df):
     analyzer = SentimentIntensityAnalyzer()
     pos_count = 0
-    pos_correct = 0
     neg_count = 0
-    neg_correct = 0
     neu_count = 0
     for index, row in text_df.iterrows():
         polarity = analyzer.polarity_scores(row.text)
         print(row.text, polarity)
-        if polarity['compound'] > 0.5:
+        if polarity['compound'] > 0.05:
             pos_count += 1
-        elif polarity['compound'] < -0.5:
+        elif polarity['compound'] < -0.05:
             neg_count += 1
         else:
             neu_count += 1
     return pos_count, neu_count, neg_count
 
 
-
+def extreme_vader_sentiment(text_df):
+    analyzer = SentimentIntensityAnalyzer()
+    extreme_pos_count = 0
+    extreme_neg_count = 0
+    pos_count = 0
+    neg_count = 0
+    neu_count = 0
+    for index, row in text_df.iterrows():
+        polarity = analyzer.polarity_scores(row.text)
+        print(row.text, polarity)
+        if polarity['compound'] > 0.05:
+            if polarity['pos'] > 0.5:
+                extreme_pos_count += 1
+            else:
+                pos_count += 1
+        elif polarity['compound'] < -0.05:
+            if polarity['neg'] < 0.5:
+                extreme_neg_count += 1
+            else:
+                neg_count += 1
+        else:
+            neu_count += 1
+    return extreme_pos_count, pos_count, neu_count, neg_count, extreme_neg_count
 
 
 def save_to_disk(data, path, filename):
@@ -125,3 +145,17 @@ def plot_sentiment(total_pos, total_neg):
     plt.ylabel('number')
     plt.title('number of Positive and Negative Tweets')
     return plt.show()
+
+
+def translation(df):
+    translator = Translator()
+    for index, row in df.iterrows():
+        lang = translator.detect(row.text).lang
+        if lang != 'en':
+            try:
+                df.at[index, 'text'] = translator.translate(row.text, dest='en', src=lang).text
+            except ValueError:
+                continue
+        else:
+            continue
+    return df

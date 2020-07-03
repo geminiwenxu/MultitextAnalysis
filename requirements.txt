@@ -5,3 +5,5 @@ nltk
 spacy
 vaderSentiment
 matplotlib
+TextBlob
+seaborn

@@ -16,9 +16,9 @@ def check_entity(text_df, entities=Config.entities):
         for index, row in text_df.iterrows():
             if entity in row.text:
                 polarity = analyzer.polarity_scores(row.text)
-                if polarity['compound'] > 0.5:
+                if polarity['compound'] > 0.05:
                     pos_count += 1
-                elif polarity['compound'] < -0.5:
+                elif polarity['compound'] < -0.05:
                     neg_count += 1
                 else:
                     neu_count += 1

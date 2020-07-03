@@ -1,6 +1,6 @@
 from tweepy import Stream, StreamListener
 import json
-from TwitterStreaming import TwitterAuthenticator
+from TwitterStreaming.twtr_client import TwitterAuthenticator
 
 
 # # # # TWITTER STREAMER # # # #

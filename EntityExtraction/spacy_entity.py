@@ -19,7 +19,7 @@ if __name__ == "__main__":
     tweets_data_path = '../Data/tweets_by_country/'
     out = pd.DataFrame()
     out_count = {}
-    all_files = get_all_files(Config.filepath + tweets_data_path, extension='csv')
+    all_files = get_all_files(Config.data_path + 'tweets_by_country/', extension='csv')
     for country in Config.country_prefix:
         df = pd.DataFrame()
         news_files = list(filter(lambda x: country in x, all_files))
@@ -31,6 +31,6 @@ if __name__ == "__main__":
         extracted = tag(text_df, country)
         out_count.update({country: extracted.entity.value_counts().head(20).to_dict()})
         out = out.append(extracted)
-    save_to_disk(out_count, Config.reports_path + 'report_named_entities/', 'spacy_entity_country.json')
-    save_to_disk({'all': out.entity.value_counts().head(20).to_dict()}, Config.reports_path + 'report_named_entities/',
+    save_to_disk(out_count, Config.reports_path, 'spacy_entity_country.json')
+    save_to_disk({'all': out.entity.value_counts().head(20).to_dict()}, Config.reports_path,
                  'spacy_entity_all.json')
