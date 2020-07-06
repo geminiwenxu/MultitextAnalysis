@@ -2,7 +2,7 @@ import pandas as pd
 import spacy
 
 from config import Config
-from utils import get_all_files, filter_df, save_to_disk
+from utils import get_all_files, filter_df, save_to_disk, preprocess_less
 
 
 def tag(df, c_prefix):
@@ -28,6 +28,7 @@ if __name__ == "__main__":
             data.dropna(axis=0, how='any', inplace=True)
             df = df.append(data, ignore_index=True)
         text_df = filter_df(Config.keywords, df)
+        cleaned_df = preprocess_less(text_df)
         extracted = tag(text_df, country)
         out_count.update({country: extracted.entity.value_counts().head(20).to_dict()})
         out = out.append(extracted)

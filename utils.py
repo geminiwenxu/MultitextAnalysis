@@ -2,10 +2,11 @@ import json
 import pickle
 import re
 from glob import glob
-from googletrans import Translator
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from googletrans import Translator
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 
@@ -55,6 +56,23 @@ def preprocess(df):
         row.text = re.sub(r"\s+[a-z]$", " ", row.text)
         row.text = re.sub(r"^[a-z]\s+", " ", row.text)
         row.text = re.sub(r"\s+", " ", row.text)
+        cleaned_df = cleaned_df.append(row, ignore_index=True)
+    return cleaned_df
+
+
+def preprocess_less(df):
+    cleaned_df = pd.DataFrame()
+    for index, row in df.iterrows():
+        row.text = re.sub(r"^https://t.co/[a-zA-Z0-9]*\s", " ", row.text)
+        row.text = re.sub(r"\s+https://t.co/[a-zA-Z0-9]*\s", " ", row.text)
+        row.text = re.sub(r"\s+https://t.co/[a-zA-Z0-9]*$", " ", row.text)
+        row.text = re.sub(r"\W", " ", row.text)
+        row.text = re.sub(r"\d", " ", row.text)
+        row.text = re.sub(r"\s+[a-z]\s+", " ", row.text)
+        row.text = re.sub(r"\s+[a-z]$", " ", row.text)
+        row.text = re.sub(r"^[a-z]\s+", " ", row.text)
+        row.text = re.sub(r"\s+", " ", row.text)
+        row.text = re.sub(r"[RT @]", " ", row.text)
         cleaned_df = cleaned_df.append(row, ignore_index=True)
     return cleaned_df
 
